@@ -1,19 +1,23 @@
-from cs50 import SQL
 from flask import Flask, jsonify, redirect, render_template, request, session
 from flask_session import Session
 from tempfile import mkdtemp
 from werkzeug.security import check_password_hash, generate_password_hash
+from cs50 import SQL
+# import os
 
 import smtplib
 
 from AI_finalproject.utils import login_required, apology
+
+SECRET_KEY = '+\x87\x0b\xed!4S\xb6\xa5^\xd7#~S\xc3\xfaJ;&\xfe\xca1\xc7r'
+DATABASE_URL = 'postgres://nmksvjgdfmnpfp:284d61f26568bd60d6ad6ca86ad51067554534893d1df2489bb3c696f696feff@ec2-54-235-158-17.compute-1.amazonaws.com:5432/d154d5vien8a0a'
 
 lista = [0]
 server = smtplib.SMTP('smtp.gmail.com', 587)
 
 # Configure application - Copied from Problem set 8
 app = Flask(__name__)
-
+db = SQL(DATABASE_URL)
 # Ensure templates are auto-reloaded - Copied from Problem set 8
 app.config["TEMPLATES_AUTO_RELOAD"] = True
 
@@ -22,7 +26,6 @@ app.config["SESSION_FILE_DIR"] = mkdtemp()
 app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
-
 
 # Ensure responses aren't cached - Copied from Problem set 8
 
@@ -41,12 +44,8 @@ app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
 
-# Configure CS50 Library to use PostgreSQL database
-db = SQL("postgres://test_user:test123@localhost:5432/smf")
-
 
 # Register new user - Copied from Problem set 8
-
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
@@ -427,3 +426,7 @@ def logout():
 
     # Redirect user to login form
     return redirect("/")
+
+if __name__ == '__main__':
+    # Threaded option to enable multiple instances for multiple user access support
+    app.run(threaded=True, port=5000)
