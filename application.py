@@ -7,7 +7,7 @@ from cs50 import SQL
 
 import smtplib
 
-from AI_finalproject.utils import login_required, apology
+from utils import login_required, apology
 
 SECRET_KEY = '+\x87\x0b\xed!4S\xb6\xa5^\xd7#~S\xc3\xfaJ;&\xfe\xca1\xc7r'
 DATABASE_URL = 'postgres://nmksvjgdfmnpfp:284d61f26568bd60d6ad6ca86ad51067554534893d1df2489bb3c696f696feff@ec2-54-235-158-17.compute-1.amazonaws.com:5432/d154d5vien8a0a'
@@ -428,5 +428,4 @@ def logout():
     return redirect("/")
 
 if __name__ == '__main__':
-    # Threaded option to enable multiple instances for multiple user access support
-    app.run(threaded=True, port=5000)
+    app.run(threaded=True)
